@@ -1,0 +1,28 @@
+clear all;
+close all;
+N=1000;
+T=2*pi;
+dur=T;
+t=0:dur/N:dur;
+a=1;
+b=0.002;
+w0=5.1;
+w1=5*w0;
+sig=(a*sin(2*pi*w0*t)+b*sin(2*pi*w1*t)).^2;
+sigH=sig.*hana(N);
+%fourier transform
+F=fft(sig);
+fres=fft(sigH);
+F=F(1:(N/2+1));
+fres=fres(1:(N/2+1));
+F=abs(F);
+fres=abs(fres);
+F_x=0:1:N/2;
+subplot(4,1,1);
+plot(t,sig);
+subplot(4,1,2);
+plot((F_x/dur),log(F/dur/N*2));
+subplot(4,1,3);
+plot(t,sigH);
+subplot(4,1,4);
+plot((F_x/dur),log(fres/dur/N*2));
